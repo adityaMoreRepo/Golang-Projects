@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"time"
+	"strings"
 )
 
 func main() {
@@ -109,21 +109,63 @@ func main() {
 	// }
 
 	//It is a good practive to preinitiallize the slice for better performance
-	n := 1000000
-	testSlice := []int{}
-	testSlice2 := make([]int, 0, n) //init a slice with size 0 and cap 1000000
-	//let's test the time taken to append each slice with million entries
-	fmt.Printf("Total time taken to append without preallocation: %v\n", timeLoop(testSlice, n))
-	fmt.Printf("Total time taken to append with preallocation: %v\n", timeLoop(testSlice2, n))
+	// n := 1000000
+	// testSlice := []int{}
+	// testSlice2 := make([]int, 0, n) //init a slice with size 0 and cap 1000000
+	// //let's test the time taken to append each slice with million entries
+	// fmt.Printf("Total time taken to append without preallocation: %v\n", timeLoop(testSlice, n))
+	// fmt.Printf("Total time taken to append with preallocation: %v\n", timeLoop(testSlice2, n))
+
+	//more about strings
+	// myString := "résumé"
+	// indexed := myString[0]
+	// fmt.Printf("%v, %T", indexed, indexed)
+	// 114, uint8
+	//here type is unit8 for the first char of a string and 114 is represented as ascii value
+	// for i, v := range myString {
+	// 	fmt.Println(i, v)
+	// }
+	//Output:
+	// 1 233
+	// 3 115
+	// 4 117
+	// 5 109
+	// 6 233
+	//go uses UTF-8 encoding which allows variable length encoding. That means some characters are bigger in size than others.
+	//some of the characters have 2 bytes as well like é, hence 2nd index is skipped
+	//Hence, length of the string is by no of bytes and not by the characters.
+	// fmt.Println("Length of my string is : ", len(myString))
+	//An instant way of iterating through string is casting it to rune instead of iterating it through an underlying byte array
+	// myNewString := []rune("résumé")
+	// for i, v := range myNewString {
+	// 	fmt.Println(i, v)
+	// }
+	// fmt.Println("Length of my string is : ", len(myNewString))
+	//we can concatenate string using +
+	stringSlice := []string{"s", "t", "r", "i", "n", "g"}
+	// catStr := ""
+	// for i := range stringSlice {
+	// 	catStr += stringSlice[i]
+	// }
+	// fmt.Println(catStr)
+	// catStr[0] ='a' //not valid
+	//As strings are immutable in golang we are actually creating new string everytime we concat for catStr which is pretty inefficient
+	//we can use go build in string pkg for string builder
+	var strBuilder strings.Builder
+	for i := range stringSlice {
+		strBuilder.WriteString(stringSlice[i])
+	}
+	catStr := strBuilder.String()
+	fmt.Println(catStr)
 }
 
-func timeLoop(slice []int, n int) time.Duration {
-	t0 := time.Now()
-	for len(slice) < n {
-		slice = append(slice, 1)
-	}
-	return time.Since(t0)
-}
+// func timeLoop(slice []int, n int) time.Duration {
+// 	t0 := time.Now()
+// 	for len(slice) < n {
+// 		slice = append(slice, 1)
+// 	}
+// 	return time.Since(t0)
+// }
 
 // func myFuction(n1 int, n2 int) (int, int, error) {
 // 	var err error
