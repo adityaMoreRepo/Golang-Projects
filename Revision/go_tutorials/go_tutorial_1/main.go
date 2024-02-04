@@ -136,11 +136,11 @@ func main() {
 	//Hence, length of the string is by no of bytes and not by the characters.
 	// fmt.Println("Length of my string is : ", len(myString))
 	//An instant way of iterating through string is casting it to rune instead of iterating it through an underlying byte array
-	// myNewString := []rune("résumé")
-	// for i, v := range myNewString {
-	// 	fmt.Println(i, v)
-	// }
-	// fmt.Println("Length of my string is : ", len(myNewString))
+	myNewString := []rune("résumé")
+	for i, v := range myNewString {
+		fmt.Println(i, v)
+	}
+	fmt.Println("Length of my string is : ", len(myNewString))
 	//we can concatenate string using +
 	stringSlice := []string{"s", "t", "r", "i", "n", "g"}
 	// catStr := ""
